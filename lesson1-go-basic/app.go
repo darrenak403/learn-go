@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
-
 func main() {
-	fmt.Println("Hello, Thanh Dat")
+	//Bài 1:
+	// fmt.Println("Hello, Thanh Dat")
+	// randomUser()
+
+	//Bài 2:
+	var fullName string = "Thanh Dat"
 }
