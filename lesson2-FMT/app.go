@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	// fmt.Print("Hello, World!")
 	// fmt.Print("Thanh Dat")
@@ -23,5 +25,26 @@ func main() {
 
 	// message := fmt.Sprintln("Hello, ", "Thanh Dat")
 	// fmt.Print(message)
+
+	//Bai 5: Kieu du lieu cua bien
+	ten := "Thanh Dat"
+	tuoi := 22
+	chieuccao := 1.75
+	daTotNghiep := true
+	phanTram := 10
+
+	fmt.Printf("Kieu du lieu cua bien ten: %T\n", ten)
+	fmt.Printf("Kieu du lieu cua bien tuoi: %T\n", tuoi)
+	fmt.Printf("Kieu du lieu cua bien chieuCao: %T\n", chieuccao)
+	fmt.Printf("Kieu du lieu cua bien daTotNghiep: %T\n", daTotNghiep)
+	fmt.Printf("Kieu du lieu cua bien phanTram: %T\n", phanTram)
+
+	fmt.Printf("Toi ten la: %v \n", ten)
+
+	fmt.Printf("Toi ten la: %s, toi %d tuoi, chieu cao cua toi la %.2fm, da tot nghiep: %t, phan tram cua toi la: %v\n", ten, tuoi, chieuccao, daTotNghiep, phanTram)
+
+	fmt.Printf("Chieu cao cua toi la %.2fm \n", chieuccao)
+	fmt.Printf("Chieu cao cua toi la %.5fm \n", chieuccao)
+	fmt.Printf("Chieu cao cua toi la %.1fm \n", chieuccao)
 
 }
