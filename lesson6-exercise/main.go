@@ -38,37 +38,57 @@ func tongCacSoTu1DenN(n int) int {
 	return n + tongCacSoTu1DenN(n-1)
 }
 
+func readInt(prompt string) (int, error) {
+	fmt.Print(prompt)
+	var num int
+	_, err := fmt.Scanln(&num)
+	return num, err
+}
+
 func main() {
 	for {
 		fmt.Println("Chon bai tap:")
 		fmt.Println("1. Tong cac so tu 1 den n")
 		fmt.Println("2. Fibonacci")
 		fmt.Println("0. Thoat")
+
 		var choice int
-		fmt.Scanln(&choice)
+		for {
+			var err error
+			choice, err = readInt("Nhap lua chon: ")
+			if err != nil || choice <= 0 {
+				fmt.Println("Vui long nhap mot so nguyen hop le")
+			} else {
+				break
+			}
+		}
 		switch choice {
 		case 0:
 			fmt.Println("Cam on da su dung chuong trinh, Bye!!")
 			return
 		case 1:
 			var num int
-			fmt.Print("Nhap so n: ")
-			_, err := fmt.Scanln(&num)
-			if err != nil || num <= 0 {
-				fmt.Println("Vui long nhap mot so nguyen duong")
-				continue
+			for {
+				var err error
+				num, err = readInt("Nhap so n: ")
+				if err != nil || num <= 0 {
+					fmt.Println("Vui long nhap mot so nguyen duong")
+				} else {
+					break
+				}
 			}
-
 			result := tongCacSoTu1DenN(num)
 			fmt.Printf("Tong cac so tu 1 den %d la: %d\n", num, result)
 		case 2:
 			var num int
-			fmt.Print("Nhap so n: ")
-			_, err := fmt.Scanln(&num)
-
-			if err != nil || num <= 0 {
-				fmt.Println("Vui long nhap mot so nguyen duong")
-				continue
+			for {
+				var err error
+				num, err = readInt("Nhap so n: ")
+				if err != nil || num <= 0 {
+					fmt.Println("Vui long nhap mot so nguyen duong")
+				} else {
+					break
+				}
 			}
 
 			fibonacci(num)
