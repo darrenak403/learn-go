@@ -1,6 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
 
 func fibonacci(n int) {
 	term1, term2 := 0, 1
@@ -40,9 +46,20 @@ func tongCacSoTu1DenN(n int) int {
 
 func readInt(prompt string) (int, error) {
 	fmt.Print(prompt)
-	var num int
-	_, err := fmt.Scanln(&num)
-	return num, err
+
+	reader := bufio.NewReader(os.Stdin)
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return 0, fmt.Errorf("error reading input: %v", err)
+	}
+
+	input = strings.TrimSpace(input)
+
+	num, err := strconv.Atoi(input)
+	if err != nil {
+		return 0, fmt.Errorf("error converting input to integer: %v", err)
+	}
+	return num, nil
 }
 
 func main() {
