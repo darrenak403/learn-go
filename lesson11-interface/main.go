@@ -19,6 +19,12 @@ func MakeAnimalSpeakPlus(p service.AnimalPlus) {
 	fmt.Println(p.Speak())
 	fmt.Println(p.Eat())
 }
+
+// Empty interface
+func PrintValue(val interface{}) {
+	fmt.Println(val)
+}
+
 func main() {
 	myDog, err := dog.New("Bully")
 	if err != nil {
@@ -26,7 +32,7 @@ func main() {
 	}
 	MakeAnimalSpeak(myDog)
 
-	fmt.Println("-=-=-=-=-=-=-=-=-=--=")
+	PrintValue("-=-=-=-=-=-=-=-=-=--=")
 
 	myCat, err := cat.New("Whiskers")
 	if err != nil {
@@ -34,12 +40,12 @@ func main() {
 	}
 	MakeAnimalSpeakPlus(myCat)
 
-	fmt.Println("-=-=-=-=-=-=-=-=-=--=")
+	PrintValue("-=-=-=-=-=-=-=-=-=--=")
 
 	myMouse, err := mouse.New("Jerry")
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(myMouse.Run())
+	PrintValue(myMouse.Run())
 }
