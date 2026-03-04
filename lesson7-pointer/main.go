@@ -28,12 +28,12 @@ func lythuyetPointer() {
 	fmt.Printf("Find value name of ptrName2: %v", **ptrName2)
 }
 
-func updateName(name string) {
-	name = "Updated Name"
+func updateName(name *string) {
+	*name = "Updated Name"
 	fmt.Println("-=-=-=-=-=-=-= Infomation name variable in updateName function -=-=-=-=-=")
-	fmt.Printf("Data type: %T \n", name)
-	fmt.Printf("Value: %v \n", name)
-	fmt.Printf("Address: %v \n", &name)
+	fmt.Printf("Data type: %T \n", *name)
+	fmt.Printf("Value: %v \n", *name)
+	fmt.Printf("Address: %v \n", name)
 }
 
 func main() {
@@ -51,5 +51,11 @@ func main() {
 
 	fmt.Println()
 
-	updateName(name)
+	updateName(&name)
+
+	fmt.Println("-=-=-=-=-=-=-= Infomation name variable after run Update Name func -=-=-=-=-=")
+	fmt.Printf("Data type: %T \n", name)
+	fmt.Printf("Value: %v \n", name)
+	fmt.Printf("Address: %v \n", &name)
+
 }
