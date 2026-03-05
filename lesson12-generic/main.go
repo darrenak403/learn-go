@@ -3,6 +3,8 @@ package main
 import (
 	"cmp"
 	"fmt"
+
+	"golang.org/x/exp/constraints"
 )
 
 type Box[T any] struct {
@@ -20,6 +22,14 @@ func IsEqual[T comparable](a, b T) bool {
 
 func IsNotEqual[T comparable](a, b T) bool {
 	return a != b
+}
+
+type Number interface {
+	constraints.Integer | constraints.Float
+}
+
+func Sum[T Number](a, b T) T {
+	return a + b
 }
 
 func Max[T cmp.Ordered](a, b T) T {
@@ -56,10 +66,14 @@ func main() {
 	// fmt.Println(MaxLengthString("Dat", "Thanh Dat")) // "Thanh Dat"
 
 	//4. Generic struct
-	stringBox := Box[string]{Content: "Hello, World!", Description: "A box that contains a string"}
-	intBox := Box[int]{Content: 42, Description: 99}
-	PrintValue(stringBox.Content)
-	PrintValue(intBox.Content)
-	PrintValue(stringBox.Description)
-	PrintValue(intBox.Description)
+	// stringBox := Box[string]{Content: "Hello, World!", Description: "A box that contains a string"}
+	// intBox := Box[int]{Content: 42, Description: 99}
+	// PrintValue(stringBox.Content)
+	// PrintValue(intBox.Content)
+	// PrintValue(stringBox.Description)
+	// PrintValue(intBox.Description)
+
+	//5. Constraints in generic functions
+	fmt.Println(Sum(10, 20))     // 30
+	fmt.Println(Sum(3.14, 2.71)) // 5.85
 }
