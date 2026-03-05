@@ -22,7 +22,22 @@ func MakeAnimalSpeakPlus(p service.AnimalPlus) {
 
 // Empty interface
 func PrintValue(val interface{}) {
-	fmt.Println(val)
+	// str, ok := val.(string)
+	// if ok {
+	// 	fmt.Println(str)
+	// } else {
+	// 	fmt.Println("Please send a string value")
+	// }
+	switch val := val.(type) {
+	case string:
+		fmt.Println(val)
+	case int:
+		fmt.Println(val)
+	case float64:
+		fmt.Println(val)
+	default:
+		fmt.Println("Unknown type")
+	}
 }
 
 func main() {
@@ -48,4 +63,9 @@ func main() {
 	}
 
 	PrintValue(myMouse.Run())
+
+	PrintValue("=--==-=-==-=-==")
+
+	PrintValue(5.8)
+	PrintValue(true)
 }
