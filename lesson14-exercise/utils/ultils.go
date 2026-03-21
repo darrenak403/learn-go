@@ -37,6 +37,19 @@ func GetPositiveFloat(prompt string) float64 {
 	}
 }
 
+func GetOptionalPositiveFloat(prompt string, oldValue float64) float64 {
+	input := ReadInput(prompt)
+	if input == "" {
+		return oldValue
+	}
+	num, err := strconv.ParseFloat(input, 64)
+	if err != nil || num < 0 {
+		fmt.Println("❌ Vui long nhap so thuc duong!")
+		return GetOptionalPositiveFloat(prompt, oldValue)
+	}
+	return num
+}
+
 func GetNonEmptyString(prompt string) string {
 	for {
 		input := ReadInput(prompt)
@@ -45,6 +58,14 @@ func GetNonEmptyString(prompt string) string {
 		}
 		fmt.Println("❌ Vui long nhap du lieu!")
 	}
+}
+
+func GetOptionalString(prompt string, oldValue string) string {
+	input := ReadInput(prompt)
+	if input == "" {
+		return oldValue
+	}
+	return input
 }
 
 func ClearScreen() {

@@ -37,10 +37,50 @@ func AddTeacher() {
 }
 
 func RemoveTeacher() {
+	fmt.Println("===-=-=== Xoa giang vien -=-=-=====")
+	id := utils.GetPositiveInt("- Nhap id: ")
+	// 0 1 2 3 4
+	// 1 2 3 4 5
+	// 1 2 3 4 5
+	// i = 2
+	// teacherList[:2] = [1, 2]
+	// teacherList[3:] = [4, 5]
 
+	for i, teacher := range teacherList {
+		if teacher.Id == id {
+			teacherList = append(teacherList[:i], teacherList[i+1:]...)
+			fmt.Println("✅ Xoa giang vien thanh cong")
+			return
+		}
+	}
+	fmt.Println("❌ Khong tim thay giang vien")
 }
 
 func UpdateTeacher() {
+	fmt.Println("===-=-=== Sua giang vien -=-=-=====")
+	id := utils.GetPositiveInt("- Nhap id: ")
+
+	for i, teacher := range teacherList {
+		if teacher.Id == id {
+			fmt.Println("Nhap thong tin moi (Nhan enter de giu nguyen gia tri hien tai):")
+			name := utils.GetOptionalString(fmt.Sprintf("Nhap ten (%s): ", teacher.Name), teacher.Name)
+			subject := utils.GetOptionalString(fmt.Sprintf("Nhap mon giang day (%s): ", teacher.Subject), teacher.Subject)
+			baseSalary := utils.GetOptionalPositiveFloat(fmt.Sprintf("Nhap luong co ban (%f): ", teacher.BaseSalary), teacher.BaseSalary)
+			bonus := utils.GetOptionalPositiveFloat(fmt.Sprintf("Nhap thuong (%f): ", teacher.Bonus), teacher.Bonus)
+
+			teacherList[i] = Teacher{
+				Id:         id,
+				Name:       name,
+				Subject:    subject,
+				BaseSalary: baseSalary,
+				Bonus:      bonus,
+			}
+
+			fmt.Println("✅ Sua giang vien thanh cong")
+			return
+		}
+	}
+	fmt.Println("❌ Khong tim thay giang vien")
 
 }
 
@@ -52,7 +92,17 @@ func ListTeachers() {
 }
 
 func SearchTeacher() {
+	fmt.Println("===-=-=== Tim kiem giang vien -=-=-=====")
+	id := utils.GetPositiveInt("- Nhap id: ")
 
+	for _, t := range teacherList {
+		if t.Id == id {
+			fmt.Println("Tim thay giang vien:")
+			fmt.Println(t.GetInfo())
+			return
+		}
+	}
+	fmt.Println("❌ Khong tim thay giang vien")
 }
 
 func TeacherMenu() {

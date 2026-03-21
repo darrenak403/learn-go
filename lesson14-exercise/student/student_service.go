@@ -42,18 +42,47 @@ func AddStudent() {
 }
 
 func RemoveStudent() {
+	fmt.Println("===-=-=== Xoa sinh vien -=-=-=====")
+	id := utils.GetPositiveInt("- Nhap id: ")
 
+	for i, student := range studentList {
+		if student.Id == id {
+			studentList = append(studentList[:i], studentList[i+1:]...)
+			fmt.Println("✅ Xoa sinh vien thanh cong")
+			return
+		}
+	}
+	fmt.Println("❌ Khong tim thay sinh vien")
 }
 
 func UpdateStudent() {
 	fmt.Println("===-=-=== Sua sinh vien -=-=-=====")
 	id := utils.GetPositiveInt("- Nhap id: ")
 
-	for _, item := range studentList {
-		if item.Id == id {
-			fmt.Println("Sua sinh vien: ", id)
+	for i, student := range studentList {
+		if student.Id == id {
+			fmt.Printf("Day la i: %d", i)
+			fmt.Println("Nhap thong tin moi (Nhan enter de giu nguyen gia tri hien tai):")
+			name := utils.GetOptionalString(fmt.Sprintf("Nhap ten (%s): ", student.Name), student.Name)
+			class := utils.GetOptionalString(fmt.Sprintf("Nhap lop (%s): ", student.Class), student.Class)
+
+			newScore := make([]float64, len(student.Score))
+			for idx, score := range student.Score {
+				newScore[idx] = utils.GetOptionalPositiveFloat(fmt.Sprintf("Nhap diem thu %d (%f): ", idx+1, score), score)
+			}
+
+			studentList[i] = Student{
+				Id:    id,
+				Name:  name,
+				Class: class,
+				Score: newScore,
+			}
+
+			fmt.Println("✅ Sua sinh vien thanh cong")
+			return
 		}
 	}
+	fmt.Println("❌ Khong tim thay sinh vien")
 }
 
 func ListStudents() {
