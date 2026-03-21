@@ -48,5 +48,18 @@ func GetNonEmptyString(prompt string) string {
 }
 
 func ClearScreen() {
+	fmt.Print("\033[H\033[2J")
+}
 
+type HasId interface {
+	GetId() int
+}
+
+func IsIdUnique[T HasId](id int, list []T) bool {
+	for _, item := range list {
+		if item.GetId() == id {
+			return false
+		}
+	}
+	return true
 }

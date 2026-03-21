@@ -11,8 +11,15 @@ var studentList []Student
 
 func AddStudent() {
 	var scores []float64
+	var id int
 	fmt.Println("===-=-=== Them sinh vien -=-=-=====")
-	id := utils.GetPositiveInt("- Nhap id: ")
+	for {
+		id = utils.GetPositiveInt("- Nhap id: ")
+		if utils.IsIdUnique(id, studentList) {
+			break
+		}
+		fmt.Println("❌ Id da ton tai")
+	}
 	name := utils.GetNonEmptyString("- Nhap ten: ")
 	class := utils.GetNonEmptyString("- Nhap lop: ")
 	totalScore := utils.GetPositiveInt("- Nhap so luong diem: ")
@@ -22,7 +29,7 @@ func AddStudent() {
 	}
 
 	student := Student{
-		ID:    id,
+		Id:    id,
 		Name:  name,
 		Class: class,
 		Score: scores,
@@ -39,7 +46,14 @@ func RemoveStudent() {
 }
 
 func UpdateStudent() {
+	fmt.Println("===-=-=== Sua sinh vien -=-=-=====")
+	id := utils.GetPositiveInt("- Nhap id: ")
 
+	for _, item := range studentList {
+		if item.Id == id {
+			fmt.Println("Sua sinh vien: ", id)
+		}
+	}
 }
 
 func ListStudents() {

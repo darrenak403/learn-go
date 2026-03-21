@@ -6,8 +6,34 @@ import (
 	"darrenak.com/learn-go-basics/utils"
 )
 
-func AddTeacher() {
+var teacherList []Teacher
 
+func AddTeacher() {
+	fmt.Println("===-=-=== Them giang vien -=-=-=====")
+	var id int
+	for {
+		id = utils.GetPositiveInt("- Nhap id: ")
+		if utils.IsIdUnique(id, teacherList) {
+			break
+		}
+		fmt.Println("❌ Id da ton tai")
+	}
+	name := utils.GetNonEmptyString("- Nhap ten: ")
+	subject := utils.GetNonEmptyString("- Nhap mon giang day: ")
+	baseSalary := utils.GetPositiveFloat("- Nhap luong co ban: ")
+	bonus := utils.GetPositiveFloat("- Nhap thuong: ")
+
+	teacher := Teacher{
+		Id:         id,
+		Name:       name,
+		Subject:    subject,
+		BaseSalary: baseSalary,
+		Bonus:      bonus,
+	}
+
+	teacherList = append(teacherList, teacher)
+
+	fmt.Println("✅ Them sinh vien thanh cong")
 }
 
 func RemoveTeacher() {
@@ -19,7 +45,10 @@ func UpdateTeacher() {
 }
 
 func ListTeachers() {
-
+	fmt.Println("-=-=-=-=-= Danh sach giang vien -=-====--=")
+	for _, teacher := range teacherList {
+		fmt.Println(teacher.GetInfo())
+	}
 }
 
 func SearchTeacher() {
