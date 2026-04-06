@@ -1,52 +1,36 @@
 package main
 
 import (
-	"context"
 	"fmt"
+	"runtime"
+	"sync"
 	"time"
 )
 
-func cookPho(ctx context.Context, chPho chan<- string) {
-	fmt.Println("Bắt đầu nấu phở...")
-	select {
-	case <-time.After(1 * time.Second):
-		chPho <- "Phở đã nấu xong!"
-	case <-ctx.Done():
-		fmt.Println("Nấu phở bị hủy bỏ!")
-		return
-	}
-}
-
-func cookPizza(ctx context.Context, chPho chan<- string) {
-	fmt.Println("Bắt đầu nấu pizza...")
-	select {
-	case <-time.After(2 * time.Second):
-		chPho <- "Pizza đã nấu xong!"
-	case <-ctx.Done():
-		fmt.Println("Nấu pizza bị hủy bỏ!")
-		return
+func heavyTask(wg *sync.WaitGroup) {
+	defer wg.Done() // Báo cho WaitGroup rằng công việc đã hoàn thành
+	sum := 0
+	for i := 0; i < 100e8; i++ {
+		sum += i
 	}
 }
 
 func main() {
-	chPho := make(chan string)
-	chPizza := make(chan string)
+	numCPU := runtime.NumCPU() // Lấy số lượng CPU có sẵn
+	fmt.Printf("So luong CPU: %d\n", numCPU)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 1500*time.Millisecond)
-	defer cancel()
+	runtime.GOMAXPROCS(numCPU) // Thiết lập số lượng CPU mà Go có thể sử dụng
 
-	go cookPho(ctx, chPho)
-	go cookPizza(ctx, chPizza)
+	start := time.Now() // Lấy thời gian bắt đầu
 
-	for i := 0; i < 2; i++ {
-		select {
-		case pho := <-chPho:
-			fmt.Println("Nhan duoc:", pho)
-		case pizza := <-chPizza:
-			fmt.Println("Nhan duoc:", pizza)
-		case <-ctx.Done():
-			fmt.Println("Hết thời gian chờ, hủy bỏ nấu ăn!")
-			return
-		}
+	var wg sync.WaitGroup
+
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go heavyTask(&wg) // Chạy công việc nặng trong một goroutine
 	}
+
+	wg.Wait() // Chờ cho tất cả các goroutine hoàn thành
+
+	fmt.Println("Tong thoi gian", time.Since(start))
 }
